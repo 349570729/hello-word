@@ -1,0 +1,28 @@
+#ifndef TEX_H
+#define TEX_H
+
+
+#include "glad/glad.h"
+#include <GLFW/glfw3.h>
+// 使用glDrawArrays，绘制两个彼此相连的三角形
+class GLFWwindow;
+
+class Texture
+{
+public:
+	~Texture();
+	void beforeLoop();
+	void drawTria(GLFWwindow* window);
+private:
+	void createProgram();
+	GLuint createVertexShader();
+	GLuint createFragmentShader();
+	void setTex();
+private:
+	GLuint VBO;
+	GLuint VAO;
+	GLuint texture;
+	GLuint program;
+};
+
+#endif  // TEX_H
