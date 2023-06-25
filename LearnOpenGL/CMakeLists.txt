@@ -22,5 +22,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 target_link_directories(${PROJECT_NAME} PRIVATE
     ./lib
     )
-target_link_libraries(${PROJECT_NAME} PRIVATE glfw3)
-target_link_libraries(${PROJECT_NAME} PRIVATE shell32)
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    glfw
+    ${CMAKE_DL_LIBS})
+# target_link_libraries(${PROJECT_NAME} PRIVATE shell32)

@@ -1,12 +1,12 @@
 #include "TriangleEBO.h"
 #include <iostream>
-#include <cstringt.h>
+// #include <cstringt.h>
 
 const int triangleCnt = 1;
 
 void TriangleEBO::beforeLoop()
 {	
-	// Èý½ÇÐÎ×ø±êÊý¾Ý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	float vertices[] = {
 	-0.5f, -0.5f, 0.0f,
 	0.5f, -0.5f, 0.0f,
@@ -18,24 +18,24 @@ void TriangleEBO::beforeLoop()
 		0, 2, 3
 	};
 
-	// ´´½¨»º´æ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glGenBuffers(1, &EBO);
 	glGenBuffers(1, &VBO);
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
-	// °ó¶¨»º´æ¶ÔÏó
+	// ï¿½ó¶¨»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	// ¿½±´»º´æÊý¾Ý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(index), index, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	// ½âÊÍverticesÖÐµÄÊý¾ÝÊÇÊ²Ã´º¬Òå£¬¼´ÉèÖÃ¶¥µãÊôÐÔÖ¸Õë
-	// 0ÊÇvertex_srcÀïÃælocationµÄÖµ
-	// 3ÊÇÒòÎª¶¥µãÊôÐÔÊÇvec3£¬ËùÒÔ´«3
-	// GL_FLOAT ÊÇÊý¾ÝÀàÐÍ£¬GL_FALSE±íÊ¾²»×öÊý¾Ý±ê×¼»¯
+	// ï¿½ï¿½ï¿½ï¿½verticesï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê²Ã´ï¿½ï¿½ï¿½å£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+	// 0ï¿½ï¿½vertex_srcï¿½ï¿½ï¿½ï¿½locationï¿½ï¿½Öµ
+	// 3ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vec3ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½3
+	// GL_FLOAT ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½GL_FALSEï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý±ï¿½×¼ï¿½ï¿½
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-	// ÆôÓÃ¶¥µãÊôÐÔ
+	// ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glEnableVertexAttribArray(0);
 	createProgram();
 }
@@ -60,7 +60,7 @@ void TriangleEBO::createProgram()
 	GLuint vertex_shader = createVertexShader();
 	GLuint fragment_shader = createFragmentShader();
 
-	// ´´½¨Ò»¸ö×ÅÉ«Æ÷³ÌÐò¹©ÉÏÃæ×ÅÉ«Æ÷¸½×Å£¬¸½×Åºó²ÅÄÜµ÷ÓÃ
+	// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½
 	program = glCreateProgram();
 	glAttachShader(program, vertex_shader);
 	glAttachShader(program, fragment_shader);
@@ -73,17 +73,17 @@ void TriangleEBO::createProgram()
 		std::cout << "program link error: " << errorInfo << std::endl;
 	}
 
-	// ¸½×Åºó¾Í¿ÉÒÔÊÍ·ÅshaderÁË
+	// ï¿½ï¿½ï¿½Åºï¿½Í¿ï¿½ï¿½ï¿½ï¿½Í·ï¿½shaderï¿½ï¿½
 	glDeleteShader(vertex_shader);
 	glDeleteShader(fragment_shader);
 }
 
 GLuint TriangleEBO::createVertexShader()
 {
-	// ´´½¨¶¥µã×ÅÉ«Æ÷
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½
 	unsigned int vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-	// ¶¥µã×ÅÉ«Æ÷µÄÔ´Âë,locationÊÇÎªÁË±ãÓÚÔÚCPU¶Ë×¼±¸ÊäÈëÊý¾Ý
-	// ¶¥µã×ÅÉ«Æ÷ÐèÒª¸ºÔð´ÓCPU¶Ë½ÓÊÜÊäÈë
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½,locationï¿½ï¿½Îªï¿½Ë±ï¿½ï¿½ï¿½ï¿½ï¿½CPUï¿½ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½CPUï¿½Ë½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	const char* vertex_src = "#version 330 \n"
 		"layout (location=0) in vec3 myPos; \n"
 		"layout (location=1) in vec3 myColor; \n"
@@ -93,10 +93,10 @@ GLuint TriangleEBO::createVertexShader()
 		"	gl_Position = vec4(myPos.x, myPos.y, myPos.z, 1.0f); \n"
 		"	outColor = vec3(gl_Position.x, gl_Position.y, gl_Position.z); \n"
 		"} \0";
-	// ×ÅÉ«Æ÷¸½¼ÓÔ´Âë
+	// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½
 	glShaderSource(vertex_shader, 1, &vertex_src, nullptr);
 
-	// ±àÒë×ÅÉ«Æ÷
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½
 	glCompileShader(vertex_shader);
 	int success;
 	glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success);
@@ -110,9 +110,9 @@ GLuint TriangleEBO::createVertexShader()
 
 GLuint TriangleEBO::createFragmentShader()
 {
-	// ËéÆ¬×ÅÉ«Æ÷£¬²½ÖèÍ¬¶¥µã×ÅÉ«Æ÷
+	// ï¿½ï¿½Æ¬ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½
 	unsigned int fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-	// Æ¬¶Î×ÅÉ«Æ÷ÐèÒª¸ºÔðÊä³ö×îÖÕµÄÑÕÉ«£¬·ñÔò»áäÖÈ¾ÎªºÚÉ«
+	// Æ¬ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¾Îªï¿½ï¿½É«
 	const char* fragment_src = "#version 330 core \n"
 		"in vec3 outColor \n;"
 		"out vec4 frag_color; \n"

@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 	std::cout << "init success��" << std::endl;
 	// ע�ᴰ�ڳߴ�ı�ʱ�Ļص���������ʱӦ����Ӧ�����ӽ�
 	glfwSetFramebufferSizeCallback(window, sizeAdj);
-	Texture* obj = new Texture();
+	auto* obj = new Texture();
 	obj->beforeLoop();
 	while (!glfwWindowShouldClose(window)) {
 		if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_ESCAPE)) {
@@ -66,10 +66,3 @@ int main(int argc, char* argv[])
 	glfwTerminate();
 	return 0;
 }
-
-// #include <stdio.h>
-// int main()
-// {
-// 	printf("hello windows cmake\n");
-// 	return 0;
-// }

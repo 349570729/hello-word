@@ -1,6 +1,6 @@
 #include "tex.h"
 #include <iostream>
-#include <cstringt.h>
+// #include <cstringt.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
@@ -162,7 +162,8 @@ void Texture::setTex()
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	int width, height, channel;
-	unsigned char *data = stbi_load("LearnOpenGL\\res\\wall.jpg", &width, &height, &channel, 0);
+	// unsigned char *data = stbi_load("LearnOpenGL/res/wall.jpg", &width, &height, &channel, 0);
+	unsigned char *data = stbi_load("wall.jpg", &width, &height, &channel, 0);
 	if (nullptr == data) {
 		printf("stbi load image fail\n");
 		return;

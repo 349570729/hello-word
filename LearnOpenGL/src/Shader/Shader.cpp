@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <math.h>
 
 const std::string uniform = "time_value";
 const std::string offset = "offset";
@@ -23,7 +24,7 @@ Shader::Shader(const std::string& vertex_file, const std::string& fragment_file)
 		std::cout << "program link error: " << errorInfo << std::endl;
 	}
 
-	// ¸½×Åºó¾Í¿ÉÒÔÊÍ·ÅshaderÁË
+	// ï¿½ï¿½ï¿½Åºï¿½Í¿ï¿½ï¿½ï¿½ï¿½Í·ï¿½shaderï¿½ï¿½
 	glDeleteShader(vertex_shader);
 	glDeleteShader(fragment_shader);
 }
@@ -103,27 +104,27 @@ void ShaderTriangle::beforeLoop()
 
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
-	// OpenGLºËÐÄÄ£Ê½ÒªÇóÊ¹ÓÃVAO
-	// VAO»á¼Ç×¡ÏÂÃæµÄÒ»Ð©×´Ì¬
+	// OpenGLï¿½ï¿½ï¿½ï¿½Ä£Ê½Òªï¿½ï¿½Ê¹ï¿½ï¿½VAO
+	// VAOï¿½ï¿½ï¿½×¡ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ð©×´Ì¬
 	// 
-	// ´´½¨»º´æbuffer
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½buffer
 	glGenBuffers(1, &VBO);
-	// °ó¶¨»º´æ¶ÔÏó
+	// ï¿½ó¶¨»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	// ¿½±´»º´æÊý¾Ý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	// ½âÊÍverticesÖÐµÄÊý¾ÝÊÇÊ²Ã´º¬Òå£¬¼´ÉèÖÃ¶¥µãÊôÐÔÖ¸Õë
-	// 0ÊÇvertex_srcÀïÃælocationµÄÖµ
-	// 3ÊÇÒòÎª¶¥µãÊôÐÔµÄÊýÁ¿£¬vec3ÓÐ3¸öÊôÐÔ
-	// GL_FLOAT ÊÇÊý¾ÝÀàÐÍ£¬GL_FALSE±íÊ¾²»×öÊý¾Ý±ê×¼»¯
-	// ¶¥µãÊôÐÔ´Óvertices[0]¿ªÊ¼¶ÁÈ¡£¬ËùÒÔ×îºó´«0
-	// °ÑÊý¾Ý´«¸ømyPos
+	// ï¿½ï¿½ï¿½ï¿½verticesï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê²Ã´ï¿½ï¿½ï¿½å£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+	// 0ï¿½ï¿½vertex_srcï¿½ï¿½ï¿½ï¿½locationï¿½ï¿½Öµ
+	// 3ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vec3ï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// GL_FLOAT ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½GL_FALSEï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý±ï¿½×¼ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½vertices[0]ï¿½ï¿½Ê¼ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½myPos
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	// ÆôÓÃ¶¥µãÊôÐÔ
+	// ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glEnableVertexAttribArray(0);
 
-	// °ÑÊý¾Ý´«¸ømyColor
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½myColor
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 

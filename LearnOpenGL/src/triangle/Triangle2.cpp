@@ -1,6 +1,6 @@
-#include "triangle2.h"
+#include "Triangle2.h"
 #include <iostream>
-#include <cstringt.h>
+// #include <cstringt.h>
 
 void Triangle2::beforeLoop()
 {
@@ -17,24 +17,24 @@ void Triangle2::beforeLoop()
 
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
-	// OpenGLºËÐÄÄ£Ê½ÒªÇóÊ¹ÓÃVAO
-	// VAO»á¼Ç×¡ÏÂÃæµÄÒ»Ð©×´Ì¬
+	// OpenGLï¿½ï¿½ï¿½ï¿½Ä£Ê½Òªï¿½ï¿½Ê¹ï¿½ï¿½VAO
+	// VAOï¿½ï¿½ï¿½×¡ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ð©×´Ì¬
 	// 
-	// ´´½¨»º´æbuffer
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½buffer
 	glGenBuffers(1, &VBO);
-	// °ó¶¨»º´æ¶ÔÏó
+	// ï¿½ó¶¨»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	// ¿½±´»º´æÊý¾Ý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	// ½âÊÍverticesÖÐµÄÊý¾ÝÊÇÊ²Ã´º¬Òå£¬¼´ÉèÖÃ¶¥µãÊôÐÔÖ¸Õë
-	// 0ÊÇvertex_srcÀïÃælocationµÄÖµ
-	// 3ÊÇÒòÎª¶¥µãÊôÐÔµÄÊýÁ¿£¬vec3ÓÐ3¸öÊôÐÔ
-	// GL_FLOAT ÊÇÊý¾ÝÀàÐÍ£¬GL_FALSE±íÊ¾²»×öÊý¾Ý±ê×¼»¯
-	// ¶¥µãÊôÐÔ´Óvertices[0]¿ªÊ¼¶ÁÈ¡£¬ËùÒÔ×îºó´«0
-	// °ÑÊý¾Ý´«¸ømyPos
+	// ï¿½ï¿½ï¿½ï¿½verticesï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê²Ã´ï¿½ï¿½ï¿½å£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
+	// 0ï¿½ï¿½vertex_srcï¿½ï¿½ï¿½ï¿½locationï¿½ï¿½Öµ
+	// 3ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vec3ï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// GL_FLOAT ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½GL_FALSEï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý±ï¿½×¼ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½vertices[0]ï¿½ï¿½Ê¼ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½myPos
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	// ÆôÓÃ¶¥µãÊôÐÔ
+	// ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glEnableVertexAttribArray(0);
 }
 
@@ -44,7 +44,7 @@ void Triangle2::drawTria(GLFWwindow* window)
 	glUseProgram(program);
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
-	// ÕâÑùÒ²¿ÉÒÔ»­£¬ÆäÖÐÃ¿Ò»¸öÈý½ÇÐÎ¶¼ÓÐÒ»¸öid£¬¿ÉÒÔ±»vertex shader·ÃÎÊµ½£¨gl_InstanceID£©
+	// ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¶ï¿½ï¿½ï¿½Ò»ï¿½ï¿½idï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½vertex shaderï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½gl_InstanceIDï¿½ï¿½
 	//glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 2);
 }
 
@@ -60,7 +60,7 @@ void Triangle2::createProgram()
 	GLuint vertex_shader = createVertexShader();
 	GLuint fragment_shader = createFragmentShader();
 
-	// ´´½¨Ò»¸ö×ÅÉ«Æ÷³ÌÐò¹©ÉÏÃæ×ÅÉ«Æ÷¸½×Å£¬¸½×Åºó²ÅÄÜµ÷ÓÃ
+	// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½
 	program = glCreateProgram();
 	glAttachShader(program, vertex_shader);
 	glAttachShader(program, fragment_shader);
@@ -73,7 +73,7 @@ void Triangle2::createProgram()
 		std::cout << "program link error: " << errorInfo << std::endl;
 	}
 
-	// ¸½×Åºó¾Í¿ÉÒÔÊÍ·ÅshaderÁË
+	// ï¿½ï¿½ï¿½Åºï¿½Í¿ï¿½ï¿½ï¿½ï¿½Í·ï¿½shaderï¿½ï¿½
 	glDeleteShader(vertex_shader);
 	glDeleteShader(fragment_shader);
 }
@@ -81,20 +81,20 @@ void Triangle2::createProgram()
 GLuint Triangle2::createVertexShader()
 {
 
-	// ´´½¨¶¥µã×ÅÉ«Æ÷
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½
 	unsigned int vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-	// ¶¥µã×ÅÉ«Æ÷µÄÔ´Âë,locationÊÇÎªÁË±ãÓÚÔÚCPU¶Ë×¼±¸ÊäÈëÊý¾Ý
-	// ¶¥µã×ÅÉ«Æ÷ÐèÒª¸ºÔð´ÓCPU¶Ë½ÓÊÜÊäÈë
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½,locationï¿½ï¿½Îªï¿½Ë±ï¿½ï¿½ï¿½ï¿½ï¿½CPUï¿½ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½CPUï¿½Ë½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	const char* vertex_src = "#version 330 \n"
 		"layout (location=0) in vec3 myPos; \n"
 		"void main() \n"
 		"{ \n"
 		"	gl_Position = vec4(myPos.x, myPos.y, myPos.z, 1.0f); \n"
 		"} \0";
-	// ×ÅÉ«Æ÷¸½¼ÓÔ´Âë
+	// ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½
 	glShaderSource(vertex_shader, 1, &vertex_src, nullptr);
 
-	// ±àÒë×ÅÉ«Æ÷
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½
 	glCompileShader(vertex_shader);
 	int success;
 	glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success);
@@ -108,9 +108,9 @@ GLuint Triangle2::createVertexShader()
 
 GLuint Triangle2::createFragmentShader()
 {
-	// ËéÆ¬×ÅÉ«Æ÷£¬²½ÖèÍ¬¶¥µã×ÅÉ«Æ÷
+	// ï¿½ï¿½Æ¬ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½
 	unsigned int fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-	// Æ¬¶Î×ÅÉ«Æ÷ÐèÒª¸ºÔðÊä³ö×îÖÕµÄÑÕÉ«£¬·ñÔò»áäÖÈ¾ÎªºÚÉ«
+	// Æ¬ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¾Îªï¿½ï¿½É«
 	const char* fragment_src = "#version 330 core \n"
 		"in vec3 outColor \n;"
 		"out vec4 frag_color; \n"
