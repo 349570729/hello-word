@@ -1,10 +1,9 @@
 #ifndef TEX_H
 #define TEX_H
 
-
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
-// Ê¹ÓÃglDrawArrays£¬»æÖÆÁ½¸ö±Ë´ËÏàÁ¬µÄÈý½ÇÐÎ
+// Ê¹ï¿½ï¿½glDrawArraysï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 class GLFWwindow;
 
 class Texture
@@ -12,12 +11,14 @@ class Texture
 public:
 	~Texture();
 	void beforeLoop();
-	void drawTria(GLFWwindow* window);
+	void drawTria(GLFWwindow *window);
+
 private:
 	void createProgram();
 	GLuint createVertexShader();
 	GLuint createFragmentShader();
 	void setTex();
+
 private:
 	GLuint VBO;
 	GLuint VAO;
@@ -25,4 +26,4 @@ private:
 	GLuint program;
 };
 
-#endif  // TEX_H
+#endif // TEX_H
