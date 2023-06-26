@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <thread>
 #include "Triangle.h"
 #include "TriangleEBO.h"
 #include "Triangle2.h"
@@ -38,7 +39,7 @@ GLFWwindow *initGLFW()
 	return window;
 }
 
-int main(int argc, char *argv[])
+void thread_main()
 {
 	GLFWwindow *window = initGLFW();
 
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
 	if (!gladLoadGLLoader(GLADloadproc(glfwGetProcAddress)))
 	{
 		std::cout << "fail to initialize glad" << std::endl;
-		return -1;
+		return;
 	}
 	// ���ô����ӽ�
 	glViewport(0, 0, 800, 600);
@@ -70,5 +71,13 @@ int main(int argc, char *argv[])
 	delete obj;
 	// ����ǰ��Ҫ����terminate�ͷ���Դ������initʧ����
 	glfwTerminate();
+}
+
+int main(int argc, char *argv[])
+{
+	std::thread t1(thread_main);
+	// std::thread t2(thread_main);
+	t1.join();
+	// t1.join();
 	return 0;
 }

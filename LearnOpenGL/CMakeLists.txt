@@ -24,7 +24,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 if (UNIX) 
     target_link_libraries(${PROJECT_NAME} PRIVATE 
         glfw
-        ${CMAKE_DL_LIBS})
+        ${CMAKE_DL_LIBS}
+        pthread)
 else()
 # windows
     target_link_directories(${PROJECT_NAME} PRIVATE
