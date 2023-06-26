@@ -16,13 +16,16 @@ void sizeAdj(GLFWwindow *window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-GLFWwindow *initGLFW()
+GLFWwindow *initGLFW(bool multi_thread)
 {
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	// �������ں�������
+	if (!multi_thread)
+	{
+		glfwInit();
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	}
 	GLFWwindow *window = glfwCreateWindow(800, 600, "hello glfw", nullptr, nullptr);
 	if (nullptr == window)
 	{
@@ -39,9 +42,9 @@ GLFWwindow *initGLFW()
 	return window;
 }
 
-void thread_main()
+void doRender(bool multi_thread)
 {
-	GLFWwindow *window = initGLFW();
+	GLFWwindow *window = initGLFW(multi_thread);
 
 	// ����opengl�ĺ���ǰ�����ʼ��glad�����ڻ�ȡopengl������ַ
 	if (!gladLoadGLLoader(GLADloadproc(glfwGetProcAddress)))
@@ -69,15 +72,33 @@ void thread_main()
 		obj->drawTria(window);
 	}
 	delete obj;
+	if (!multi_thread)
+	{
+		glfwTerminate();
+	}
 	// ����ǰ��Ҫ����terminate�ͷ���Դ������initʧ����
+}
+
+void render()
+{
+	doRender(false);
+}
+
+void multiThreadRender()
+{
+	glfwInit();
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	std::thread t1(doRender, true);
+	std::thread t2(doRender, true);
+	t1.join();
+	t2.join();
 	glfwTerminate();
 }
 
 int main(int argc, char *argv[])
 {
-	std::thread t1(thread_main);
-	// std::thread t2(thread_main);
-	t1.join();
-	// t1.join();
+	multiThreadRender();
 	return 0;
 }
