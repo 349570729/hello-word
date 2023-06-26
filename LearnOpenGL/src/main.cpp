@@ -97,8 +97,13 @@ void multiThreadRender()
 	glfwTerminate();
 }
 
+namespace test
+{
+	void os();
+}
 int main(int argc, char *argv[])
 {
-	multiThreadRender();
+	test::os();
+	// multiThreadRender();
 	return 0;
 }
