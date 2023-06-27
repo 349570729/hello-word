@@ -5,9 +5,13 @@ namespace os
 {
     std::string curProcessLoc()
     {
+#ifdef _WIN32
         char path[1024];
         GetModuleFileName(nullptr, path, sizeof(path));
         return path;
+#else
+        // linux, todo
+        return "";
+#endif
     }
-
 }
