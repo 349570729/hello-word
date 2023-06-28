@@ -103,7 +103,8 @@ namespace test
 }
 int main(int argc, char *argv[])
 {
-	test::os();
+	// test::os();
 	// multiThreadRender();
+	render();
 	return 0;
 }
