@@ -22,7 +22,8 @@ private:
 private:
 	GLuint VBO;
 	GLuint VAO;
-	GLuint texture;
+	GLuint box_texture;
+	GLuint smile_texture;
 	GLuint program;
 };
 

@@ -8,7 +8,8 @@ Texture::~Texture()
 {
 	glDeleteBuffers(1, &VBO);
 	glDeleteVertexArrays(1, &VAO);
-	glDeleteTextures(1, &texture);
+	glDeleteTextures(1, &box_texture);
+	glDeleteTextures(1, &smile_texture);
 	glDeleteProgram(program);
 }
 
@@ -59,8 +60,11 @@ void Texture::beforeLoop()
 void Texture::drawTria(GLFWwindow *window)
 {
 
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, box_texture);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, smile_texture);
 	glUseProgram(program);
-	glBindTexture(GL_TEXTURE_2D, texture);
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	// ����Ҳ���Ի�������ÿһ�������ζ���һ��id�����Ա�vertex shader���ʵ���gl_InstanceID��
@@ -135,9 +139,16 @@ GLuint Texture::createFragmentShader()
 							   "in vec3 cust_color;\n"
 							   "in vec2 texCoord;\n"
 							   "out vec4 frag_color; \n"
-							   "uniform sampler2D ourTexture; \n"
+							   "uniform sampler2D box_texture; \n"
+							   "uniform sampler2D smile_texture; \n"
 							   "void main() { \n"
-							   "	frag_color = texture(ourTexture, texCoord) * vec4(cust_color, 1.0f); \n"
+							   // linearly interpolate between both textures (80% container, 20% awesomeface)
+							   // mix color
+							   //    "	frag_color = texture(smile_texture, texCoord) * vec4(cust_color, 1.0f); \n"
+							   // mix two pictures
+							   //    "	frag_color = mix(texture(box_texture, texCoord), texture(smile_texture, texCoord), 0.2f); \n"
+							   // exersize 1: flip left and right smile
+							   "	frag_color = mix(texture(box_texture, texCoord), texture(smile_texture, vec2(1.0f - texCoord.x, texCoord.y)), 0.2f); \n"
 							   "}\0";
 	glShaderSource(fragment_shader, 1, &fragment_src, nullptr);
 	glCompileShader(fragment_shader);
@@ -154,24 +165,51 @@ GLuint Texture::createFragmentShader()
 
 void Texture::setTex()
 {
-	GL_TEXTURE0;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glGenTextures(1, &box_texture);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, box_texture);
 	// S �� T�� �����ظ�����
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	int width, height, channel;
-	std::string wall = os::curProcDir() + "/wall.jpg";
-	printf("path: %s\n", wall.data());
-	unsigned char *data = stbi_load(wall.data(), &width, &height, &channel, 0);
+	std::string path = os::curProcDir() + "/wall.jpg";
+
+	unsigned char *data = stbi_load(path.data(), &width, &height, &channel, 0);
 	if (nullptr == data)
 	{
-		printf("stbi load image fail\n");
+		printf("stbi load image fail:%s\n", path.data());
 		return;
 	}
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	stbi_image_free(data);
+
+	// add smile texture
+	glGenTextures(1, &smile_texture);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, smile_texture);
+	// S �� T�� �����ظ�����
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	path = os::curProcDir() + "/awesomeface.png";
+	stbi_set_flip_vertically_on_load(1);
+	data = stbi_load(path.data(), &width, &height, &channel, 0);
+	if (nullptr == data)
+	{
+		printf("stbi load image fail:%s\n", path.data());
+		return;
+	}
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	stbi_image_free(data);
+
+	// tell opengl uniform box_texture is corresponding to box_texture, and smile_texture to smile_texture
+	printf("bind uniform...\n");
+	glUseProgram(program);
+	glUniform1i(glGetUniformLocation(program, "box_texture"), 0);
+	glUniform1i(glGetUniformLocation(program, "smile_texture"), 1);
 }
