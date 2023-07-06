@@ -5,8 +5,9 @@
 
 namespace os
 {
-    std::string curProcLoc();
+    std::string curProcPath();
     std::string curProcDir();
+    std::string exeCmd(const std::string &cmd);
 }
 
 #endif // PROC_H
