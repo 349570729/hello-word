@@ -5,6 +5,6 @@ namespace test
 {
     void os()
     {
-        std::cout << "process path:" << os::curProcLoc() << std::endl;
+        std::cout << "process path:" << os::curProcPath() << std::endl;
     }
 }
