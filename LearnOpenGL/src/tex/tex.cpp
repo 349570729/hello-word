@@ -4,6 +4,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+// #define TEX_EXERCISE_1
+// #define TEX_EXERCISE_2
+
 Texture::~Texture()
 {
 	glDeleteBuffers(1, &VBO);
@@ -17,6 +20,16 @@ void Texture::beforeLoop()
 {
 	createProgram();
 	setTex();
+#ifdef TEX_EXERCISE_2
+	float vertices[] = {
+		// 3�����꣬3��������ɫ��2����������
+		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f,
+		0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 2.0f, 2.0f,
+		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+		0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 2.0f, 2.0f,
+		-0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 2.0f};
+#else
 	float vertices[] = {
 		// 3�����꣬3��������ɫ��2����������
 		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
@@ -25,6 +38,7 @@ void Texture::beforeLoop()
 		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
 		0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
 		-0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f};
+#endif
 
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
@@ -142,13 +156,15 @@ GLuint Texture::createFragmentShader()
 							   "uniform sampler2D box_texture; \n"
 							   "uniform sampler2D smile_texture; \n"
 							   "void main() { \n"
-							   // linearly interpolate between both textures (80% container, 20% awesomeface)
-							   // mix color
-							   //    "	frag_color = texture(smile_texture, texCoord) * vec4(cust_color, 1.0f); \n"
-							   // mix two pictures
-							   //    "	frag_color = mix(texture(box_texture, texCoord), texture(smile_texture, texCoord), 0.2f); \n"
-							   // exersize 1: flip left and right smile
+#if defined(TEX_EXERCISE_1)
 							   "	frag_color = mix(texture(box_texture, texCoord), texture(smile_texture, vec2(1.0f - texCoord.x, texCoord.y)), 0.2f); \n"
+#else
+							   // mix two pictures
+							   "	frag_color = mix(texture(box_texture, texCoord), texture(smile_texture, texCoord), 0.2f); \n"
+	// linearly interpolate between both textures (80% container, 20% awesomeface)
+	// mix color
+	//    "	frag_color = texture(smile_texture, texCoord) * vec4(cust_color, 1.0f); \n"
+#endif
 							   "}\0";
 	glShaderSource(fragment_shader, 1, &fragment_src, nullptr);
 	glCompileShader(fragment_shader);
@@ -168,9 +184,14 @@ void Texture::setTex()
 	glGenTextures(1, &box_texture);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, box_texture);
-	// S �� T�� �����ظ�����
+// S �� T�� �����ظ�����
+#if defined(TEX_EXERCISE_2)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+#else
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+#endif
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	int width, height, channel;
