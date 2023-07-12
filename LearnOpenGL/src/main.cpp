@@ -10,6 +10,7 @@
 #include "IShader.h"
 #include "Shader.h"
 #include "tex.h"
+#include <functional>
 
 void sizeAdj(GLFWwindow *window, int width, int height)
 {
@@ -38,6 +39,7 @@ GLFWwindow *initGLFW(bool multi_thread)
 	else
 	{
 		glfwMakeContextCurrent(window);
+		glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_FALSE);
 	}
 	return window;
 }
@@ -58,6 +60,9 @@ void doRender(bool multi_thread)
 	// ע�ᴰ�ڳߴ�ı�ʱ�Ļص���������ʱӦ����Ӧ�����ӽ�
 	glfwSetFramebufferSizeCallback(window, sizeAdj);
 	auto *obj = new Texture();
+	using namespace std::placeholders;
+	// glfwSetKeyCallback(window, std::bind(&Texture::onKeyPress, obj, _1, _2, _3, _4));
+	glfwSetKeyCallback(window, Texture::onKeyPress);
 	obj->beforeLoop();
 	while (!glfwWindowShouldClose(window))
 	{

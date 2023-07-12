@@ -3,6 +3,7 @@
 #include <proc.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#include "glfw3.h"
 
 // #define TEX_EXERCISE_1
 // #define TEX_EXERCISE_2
@@ -73,7 +74,7 @@ void Texture::beforeLoop()
 
 void Texture::drawTria(GLFWwindow *window)
 {
-
+	glUniform1f(glGetUniformLocation(program, "ratio"), ratio);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, box_texture);
 	glActiveTexture(GL_TEXTURE1);
@@ -83,6 +84,19 @@ void Texture::drawTria(GLFWwindow *window)
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	// ����Ҳ���Ի�������ÿһ�������ζ���һ��id�����Ա�vertex shader���ʵ���gl_InstanceID��
 	// glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 2);
+}
+
+void Texture::onKeyPress(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+	if (GLFW_KEY_UP == key)
+	{
+		ratio = std::min(1.0f, ratio + 0.1f);
+		std::cout << "ratio: " << ratio << std::endl;
+	}
+	else if (GLFW_KEY_DOWN == key)
+	{
+		ratio = std::max(0.0f, ratio - 0.1f);
+	}
 }
 
 void Texture::createProgram()
@@ -155,12 +169,13 @@ GLuint Texture::createFragmentShader()
 							   "out vec4 frag_color; \n"
 							   "uniform sampler2D box_texture; \n"
 							   "uniform sampler2D smile_texture; \n"
+							   "uniform float ratio; \n"
 							   "void main() { \n"
 #if defined(TEX_EXERCISE_1)
 							   "	frag_color = mix(texture(box_texture, texCoord), texture(smile_texture, vec2(1.0f - texCoord.x, texCoord.y)), 0.2f); \n"
 #else
 							   // mix two pictures
-							   "	frag_color = mix(texture(box_texture, texCoord), texture(smile_texture, texCoord), 0.2f); \n"
+							   "	frag_color = mix(texture(box_texture, texCoord), texture(smile_texture, texCoord), ratio); \n"
 	// linearly interpolate between both textures (80% container, 20% awesomeface)
 	// mix color
 	//    "	frag_color = texture(smile_texture, texCoord) * vec4(cust_color, 1.0f); \n"

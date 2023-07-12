@@ -34,7 +34,8 @@ namespace os
     {
         // return cmd execute result
 #ifdef _WIN32
-// todo
+        // todo
+        return std::string();
 #else
         return std::string();
 #endif
