@@ -3,11 +3,13 @@
 
 #include <string>
 
-namespace os
-{
+#define OS_NAMESPACE_BEGIN namespace os {
+#define OS_NAMESPACE_END }
+
+
+OS_NAMESPACE_BEGIN 
     std::string curProcPath();
     std::string curProcDir();
-    std::string exeCmd(const std::string &cmd);
-}
+OS_NAMESPACE_END
 
 #endif // PROC_H

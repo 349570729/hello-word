@@ -6,9 +6,10 @@
 #define SEPERATOR "/"
 #endif
 #include "proc.h"
+#include <iostream>
 
-namespace os
-{
+
+OS_NAMESPACE_BEGIN
     std::string curProcPath()
     {
 #ifdef _WIN32
@@ -19,10 +20,13 @@ namespace os
         // linux
         // getcwd: get current working directory, not process path
         // char *buffer = getcwd(NULL, 0);
-        char cmd[64];
+        char path[512];
         // refer to qt's impl qcoreapplication.cpp::qAppFileName()
-        int len = snprintf(cmd, sizeof(cmd), "realpath /proc/%d/exe", getpid());
-        return exeCmd(cmd);
+        ssize_t len = readlink("/proc/self/exe", path, sizeof(path));
+        if (len == sizeof(path)){
+            std::cout << "Path is too long! Expect less than 512" << std::endl;
+        }
+        return path;
 #endif
     }
     std::string curProcDir()
@@ -30,14 +34,4 @@ namespace os
         std::string proc_loc = curProcPath();
         return proc_loc.substr(0, proc_loc.find_last_of(SEPERATOR));
     }
-    std::string exeCmd(const std::string &cmd)
-    {
-        // return cmd execute result
-#ifdef _WIN32
-        // todo
-        return std::string();
-#else
-        return std::string();
-#endif
-    }
-}
+OS_NAMESPACE_END

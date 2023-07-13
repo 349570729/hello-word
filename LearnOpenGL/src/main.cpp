@@ -33,7 +33,7 @@ GLFWwindow *initGLFW(bool multi_thread)
 		const char *error_msg = new char[100];
 		glfwGetError(&error_msg);
 		std::cout << "fail to create window: " << error_msg << std::endl;
-		delete[] error_msg;
+		// delete[] error_msg;
 		glfwTerminate();
 	}
 	else
@@ -106,8 +106,11 @@ namespace test
 {
 	void os();
 }
+
 int main(int argc, char *argv[])
 {
+	printf("Press any key to continue...");
+	// getchar();
 	// test::os();
 	// multiThreadRender();
 	render();
