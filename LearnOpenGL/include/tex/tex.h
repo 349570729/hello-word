@@ -12,7 +12,7 @@ public:
 	~Texture();
 	void beforeLoop();
 	void drawTria(GLFWwindow *window);
-	void onKeyPress(GLFWwindow *window, int key, int scancode, int action, int mods);
+	static void onKeyPress2(GLFWwindow *window, int key, int scancode, int action, int mods);
 
 private:
 	void createProgram();
@@ -26,7 +26,9 @@ private:
 	GLuint box_texture;
 	GLuint smile_texture;
 	GLuint program;
-	float ratio{0.2};
+	static float ratio;
 };
+
+void onKeyPress(GLFWwindow *window, int key, int scancode, int action, int mods);
 
 #endif // TEX_H

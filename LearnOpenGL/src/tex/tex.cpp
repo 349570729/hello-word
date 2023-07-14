@@ -7,6 +7,7 @@
 
 // #define TEX_EXERCISE_1
 // #define TEX_EXERCISE_2
+float Texture::ratio = 0.2f;
 
 Texture::~Texture()
 {
@@ -86,16 +87,15 @@ void Texture::drawTria(GLFWwindow *window)
 	// glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 2);
 }
 
-void Texture::onKeyPress(GLFWwindow *window, int key, int scancode, int action, int mods)
+void Texture::onKeyPress2(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-	if (GLFW_KEY_UP == key)
+	if (GLFW_KEY_UP == key && action == GLFW_PRESS)
 	{
-		ratio = std::min(1.0f, ratio + 0.1f);
-		std::cout << "ratio: " << ratio << std::endl;
+		ratio = std::min(ratio + 0.1f, 1.0f);
 	}
-	else if (GLFW_KEY_DOWN == key)
+	else if (GLFW_KEY_DOWN == key && action == GLFW_PRESS)
 	{
-		ratio = std::max(0.0f, ratio - 0.1f);
+		ratio = std::max(ratio - 0.1f, 0.0f);
 	}
 }
 

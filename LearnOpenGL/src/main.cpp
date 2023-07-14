@@ -59,10 +59,9 @@ void doRender(bool multi_thread)
 	std::cout << "init success��" << std::endl;
 	// ע�ᴰ�ڳߴ�ı�ʱ�Ļص���������ʱӦ����Ӧ�����ӽ�
 	glfwSetFramebufferSizeCallback(window, sizeAdj);
-	auto *obj = new Texture();
-	using namespace std::placeholders;
-	// glfwSetKeyCallback(window, std::bind(&Texture::onKeyPress, obj, _1, _2, _3, _4));
-	glfwSetKeyCallback(window, Texture::onKeyPress);
+	Texture *obj = new Texture();
+
+	glfwSetKeyCallback(window, Texture::onKeyPress2);
 	obj->beforeLoop();
 	while (!glfwWindowShouldClose(window))
 	{
