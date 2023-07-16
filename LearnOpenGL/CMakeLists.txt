@@ -9,23 +9,30 @@ message("DEST_DIR: ${DEST_DIR}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${DEST_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${DEST_DIR})
 
-file(GLOB_RECURSE PROJECT_SOURCES . *.cpp *.c *.h)
+file(GLOB_RECURSE SRC src/*)
+file(GLOB_RECURSE OS_SRC os/*)
+file(GLOB_RECURSE TEST_SRC test/*)
 file(GLOB RESOURCE_FILES res/*)
 message(DEBUG "RESOURCE_FILES: ${RESOURCE_FILES}")
 file(COPY ${RESOURCE_FILES} DESTINATION ${DEST_DIR})
 
-add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
+add_executable(${PROJECT_NAME} 
+    ${SRC}
+    ${OS_SRC}
+    ${TEST_SRC})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-    ./include/
-    ./include/glad
-    ./include/GLFW
-    ./include/KHR
-    ./include/Shader
-    ./include/stb
-    ./include/tex
-    ./include/triangle
-    os
+./include/
+./include/glad
+./include/GLFW
+./include/KHR
+./include/Shader
+./include/stb
+./include/tex
+./include/triangle
+./include/transform
+os
+./thirdparty/glm
 )
 
 if (UNIX)

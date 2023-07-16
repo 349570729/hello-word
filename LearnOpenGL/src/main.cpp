@@ -11,6 +11,7 @@
 #include "Shader.h"
 #include "tex.h"
 #include <functional>
+#include "glm_demo.h"
 
 void sizeAdj(GLFWwindow *window, int width, int height)
 {
@@ -108,10 +109,11 @@ namespace test
 
 int main(int argc, char *argv[])
 {
-	printf("Press any key to continue...");
+	// printf("Press any key to continue...");
 	// getchar();
 	// test::os();
 	// multiThreadRender();
-	render();
+	// render();
+	glm_main();
 	return 0;
 }
