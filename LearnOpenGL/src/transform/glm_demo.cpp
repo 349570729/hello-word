@@ -41,8 +41,11 @@ void demo2()
     glm::mat4 trans, rotate, scale;
     std::cout << "initial matrix" << std::endl;
     printMat4(trans);
+    // construct a matrix based on param1, add move transform
     trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
+    // construct a matrix, rotate around param3 at param2 degrees
     rotate = glm::rotate(rotate, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    // scale
     scale = glm::scale(scale, glm::vec3(0.5f, 2.0f, 0.0f));
     std::cout << "trans matrix" << std::endl;
     printMat4(trans);
