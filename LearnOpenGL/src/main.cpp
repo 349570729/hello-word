@@ -12,6 +12,7 @@
 #include "tex.h"
 #include <functional>
 #include "glm_demo.h"
+#include "gltransform.h"
 
 void sizeAdj(GLFWwindow *window, int width, int height)
 {
@@ -60,9 +61,10 @@ void doRender(bool multi_thread)
 	std::cout << "init success��" << std::endl;
 	// ע�ᴰ�ڳߴ�ı�ʱ�Ļص���������ʱӦ����Ӧ�����ӽ�
 	glfwSetFramebufferSizeCallback(window, sizeAdj);
-	Texture *obj = new Texture();
+	transform *obj = new transform();
 
-	glfwSetKeyCallback(window, Texture::onKeyPress2);
+	// for texture class
+	// glfwSetKeyCallback(window, Texture::onKeyPress2);
 	obj->beforeLoop();
 	while (!glfwWindowShouldClose(window))
 	{
@@ -113,7 +115,7 @@ int main(int argc, char *argv[])
 	// getchar();
 	// test::os();
 	// multiThreadRender();
-	// render();
-	glm_main();
+	render();
+	// glm_main();
 	return 0;
 }
