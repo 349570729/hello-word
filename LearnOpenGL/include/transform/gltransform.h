@@ -19,6 +19,7 @@ private:
 	GLuint createFragmentShader();
 	void setTex();
 	void applyTransform();
+	void set2ndUniform();
 
 private:
 	GLuint VBO;

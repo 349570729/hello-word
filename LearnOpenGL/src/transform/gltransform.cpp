@@ -21,16 +21,6 @@ void transform::beforeLoop()
 	createProgram();
 	setTex();
 	applyTransform();
-#ifdef TEX_EXERCISE_2
-	float vertices[] = {
-		// 3�����꣬3��������ɫ��2����������
-		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f,
-		0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 2.0f, 2.0f,
-		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-		0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 2.0f, 2.0f,
-		-0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 2.0f};
-#else
 	float vertices[] = {
 		// 3�����꣬3��������ɫ��2����������
 		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
@@ -39,7 +29,6 @@ void transform::beforeLoop()
 		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
 		0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
 		-0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f};
-#endif
 
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
@@ -80,6 +69,9 @@ void transform::drawTria(GLFWwindow *window)
 	glBindTexture(GL_TEXTURE_2D, smile_texture);
 	glUseProgram(program);
 	glBindVertexArray(VAO);
+	applyTransform();
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	set2ndUniform();
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	// ����Ҳ���Ի�������ÿһ�������ζ���һ��id�����Ա�vertex shader���ʵ���gl_InstanceID��
 	// glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 2);
@@ -178,14 +170,9 @@ void transform::setTex()
 	glGenTextures(1, &box_texture);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, box_texture);
-// S �� T�� �����ظ�����
-#if defined(TEX_EXERCISE_2)
-	glTexParameteri(GL_transform_2D, GL_transform_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_transform_2D, GL_transform_WRAP_T, GL_CLAMP_TO_EDGE);
-#else
+	// S �� T�� �����ظ�����
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-#endif
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	int width, height, channel;
@@ -232,9 +219,20 @@ void transform::setTex()
 void transform::applyTransform()
 {
 	glm::mat4 trans(1.0f);
-	trans = glm::translate(trans, glm::vec3(0.5f, 0.0f, 0.0f));
-	trans = glm::rotate(trans, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	// trans = glm::scale(trans, glm::vec3(1.2f, 0.5f, 1.0f));
+	float rad = 180.0f * (1.0f + std::sin(glfwGetTime()));
+	trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+	trans = glm::rotate(trans, glm::radians(rad), glm::vec3(0.0f, 0.0f, 1.0f));
+	// trans = glm::scale(trans, glm::vec3(0.5f, 0.5f, 0.5f));
+	GLint loc = glGetUniformLocation(program, "trans");
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(trans));
+}
+
+void transform::set2ndUniform()
+{
+	glm::mat4 trans(1.0f);
+	float scale = 0.5f * (1.0f + std::sin(glfwGetTime()));
+	trans = glm::translate(trans, glm::vec3(-0.5f, 0.5f, 0.0f));
+	trans = glm::scale(trans, glm::vec3(scale, scale, 1.0f));
 	GLint loc = glGetUniformLocation(program, "trans");
 	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(trans));
 }
