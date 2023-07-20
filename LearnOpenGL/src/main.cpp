@@ -13,6 +13,7 @@
 #include <functional>
 #include "glm_demo.h"
 #include "gltransform.h"
+#include "cord_system.h"
 
 void sizeAdj(GLFWwindow *window, int width, int height)
 {
@@ -61,7 +62,7 @@ void doRender(bool multi_thread)
 	std::cout << "init success��" << std::endl;
 	// ע�ᴰ�ڳߴ�ı�ʱ�Ļص���������ʱӦ����Ӧ�����ӽ�
 	glfwSetFramebufferSizeCallback(window, sizeAdj);
-	transform *obj = new transform();
+	auto *obj = new cord();
 
 	// for texture class
 	// glfwSetKeyCallback(window, Texture::onKeyPress2);
