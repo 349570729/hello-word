@@ -21,15 +21,96 @@ void cord::beforeLoop()
     createProgram();
     setTex();
     applyTransform();
+    // float vertices[] = {
+    //     // 3�����꣬3��������ɫ��2����������
+    //     // front surface
+    //     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+    //     0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+    //     0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+    //     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+    //     0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+    //     -0.5f, 0.5f, 0.5f, 0.0f, 1.0f
+    //     // back surface
+    //     -0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+    //     0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+    //     0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+    //     -0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+    //     0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+    //     -0.5f, 0.5f, -0.5f, 1.0f, 1.0f
+    //     // left surface
+    //     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+    //     -0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+    //     -0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+    //     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+    //     -0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+    //     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+    //     // right surface
+    //     0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+    //     0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+    //     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+    //     0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+    //     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+    //     0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
+    //     // top surface
+    //     -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+    //     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+    //     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+    //     -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+    //     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+    //     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+    //     // bottom surface
+    //     -0.5f, -0.5f, 0.5f, 0.0f, 1.0f,
+    //     0.5f, -0.5f, 0.5f, 1.0f, 1.0f,
+    //     0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+    //     -0.5f, -0.5f, 0.5f, 0.0f, 1.0f,
+    //     0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+    //     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+    //     };
     float vertices[] = {
-        // 3�����꣬3��������ɫ��2����������
-        -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-        0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-        0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-        -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-        0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-        -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f};
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+};
+
+    glEnable(GL_DEPTH_TEST);
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
     // OpenGL����ģʽҪ��ʹ��VAO
@@ -48,28 +129,25 @@ void cord::beforeLoop()
     // GL_FLOAT ���������ͣ�GL_FALSE��ʾ�������ݱ�׼��
     // �������Դ�vertices[0]��ʼ��ȡ���������0
     // �����ݴ���myPos
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
     // ���ö�������
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
     // ���ö�������
     glEnableVertexAttribArray(1);
-
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
-    // ���ö�������
-    glEnableVertexAttribArray(2);
 }
 
 void cord::drawTria(GLFWwindow *window)
 {
+    applyTransform();
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, box_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, smile_texture);
     glUseProgram(program);
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
     // ����Ҳ���Ի�������ÿһ�������ζ���һ��id�����Ա�vertex shader���ʵ���gl_InstanceID��
     // glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 2);
 }
@@ -107,7 +185,7 @@ GLuint cord::createVertexShader()
     // ������ɫ����Ҫ�����CPU�˽�������
     const char *vertex_src = "#version 330 \n"
                              "layout (location=0) in vec3 myPos; \n"
-                             "layout (location=2) in vec2 inTexCoord; \n"
+                             "layout (location=1) in vec2 inTexCoord; \n"
                              "out vec2 texCoord;\n"
                              "uniform mat4 trans;\n"
                              "void main() \n"
@@ -142,7 +220,7 @@ GLuint cord::createFragmentShader()
                                "uniform sampler2D box_texture; \n"
                                "uniform sampler2D smile_texture; \n"
                                "void main() { \n"
-                               "	frag_color = mix(texture(box_texture, texCoord), texture(smile_texture, texCoord), 0.2); \n"
+                               "	frag_color = mix(texture(box_texture, texCoord), texture(smile_texture, texCoord), 0.5); \n"
                                "}\0";
     glShaderSource(fragment_shader, 1, &fragment_src, nullptr);
     glCompileShader(fragment_shader);
@@ -211,11 +289,12 @@ void cord::setTex()
 void cord::applyTransform()
 {
     glm::mat4 model(1.0f);
-    model = glm::rotate(model, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+    // model = glm::rotate(model, glm::radians(-75.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     glm::mat4 view(1.0f);
     view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
     glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
     glm::mat4 trans = projection * view * model;
     GLint loc = glGetUniformLocation(program, "trans");
-    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(trans));
+    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(model));
 }
