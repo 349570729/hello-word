@@ -1,4 +1,16 @@
 # hello-word
 my first repository
 Hello!
-I come from China.
+
+## build
+using cmake to generate makefiles:
+
+    cd hello-word
+    mkdir build
+    cmake -B build
+
+make:
+
+    cd build
+    make
+
