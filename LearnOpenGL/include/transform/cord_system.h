@@ -18,8 +18,8 @@ private:
     GLuint createVertexShader();
     GLuint createFragmentShader();
     void setTex();
-    void applyTransform();
-    void set2ndUniform();
+    void applyTransform1();
+    void applyTransform2();
 
 private:
     GLuint VBO;

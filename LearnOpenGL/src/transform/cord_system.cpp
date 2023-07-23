@@ -20,95 +20,51 @@ void cord::beforeLoop()
 {
     createProgram();
     setTex();
-    applyTransform();
-    // float vertices[] = {
-    //     // 3�����꣬3��������ɫ��2����������
-    //     // front surface
-    //     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-    //     0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-    //     0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-    //     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-    //     0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-    //     -0.5f, 0.5f, 0.5f, 0.0f, 1.0f
-    //     // back surface
-    //     -0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-    //     0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-    //     0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-    //     -0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-    //     0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-    //     -0.5f, 0.5f, -0.5f, 1.0f, 1.0f
-    //     // left surface
-    //     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-    //     -0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-    //     -0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-    //     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-    //     -0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-    //     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-    //     // right surface
-    //     0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-    //     0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-    //     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-    //     0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-    //     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-    //     0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
-    //     // top surface
-    //     -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
-    //     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-    //     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-    //     -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
-    //     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-    //     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-    //     // bottom surface
-    //     -0.5f, -0.5f, 0.5f, 0.0f, 1.0f,
-    //     0.5f, -0.5f, 0.5f, 1.0f, 1.0f,
-    //     0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-    //     -0.5f, -0.5f, 0.5f, 0.0f, 1.0f,
-    //     0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-    //     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-    //     };
     float vertices[] = {
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-};
+        // 3�����꣬3��������ɫ��2����������
+        // front surface
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+        -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
+        // back surface
+        -0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+        0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+        -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        // left surface
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+        -0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+        -0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+        -0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+        // right surface
+        0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
+        // top surface
+        -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+        // bottom surface
+        -0.5f, -0.5f, 0.5f, 0.0f, 1.0f,
+        0.5f, -0.5f, 0.5f, 1.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+        };
 
     glEnable(GL_DEPTH_TEST);
     glGenVertexArrays(1, &VAO);
@@ -140,16 +96,16 @@ void cord::beforeLoop()
 
 void cord::drawTria(GLFWwindow *window)
 {
-    applyTransform();
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, box_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, smile_texture);
     glUseProgram(program);
     glBindVertexArray(VAO);
+    applyTransform1();
     glDrawArrays(GL_TRIANGLES, 0, 36);
-    // ����Ҳ���Ի�������ÿһ�������ζ���һ��id�����Ա�vertex shader���ʵ���gl_InstanceID��
-    // glDrawArraysInstanced(GL_TRIANGLES, 0, 6, 2);
+    applyTransform2();
+    glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 
 void cord::createProgram()
@@ -286,15 +242,29 @@ void cord::setTex()
     glUniform1i(glGetUniformLocation(program, "smile_texture"), 1);
 }
 
-void cord::applyTransform()
+void cord::applyTransform1()
 {
     glm::mat4 model(1.0f);
     model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
     // model = glm::rotate(model, glm::radians(-75.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     glm::mat4 view(1.0f);
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -11.0f));
     glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
     glm::mat4 trans = projection * view * model;
     GLint loc = glGetUniformLocation(program, "trans");
-    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(trans));
+}
+
+void cord::applyTransform2()
+{
+    glm::mat4 model(1.0f);
+    model = glm::translate(model, glm::vec3(1.5f, 2.0f, 2.0f));
+    model = glm::rotate(model, (float)glfwGetTime() * glm::radians(70.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+    // model = glm::rotate(model, glm::radians(-75.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    glm::mat4 view(1.0f);
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -11.0f));
+    glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+    glm::mat4 trans = projection * view * model;
+    GLint loc = glGetUniformLocation(program, "trans");
+    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(trans));
 }
