@@ -259,7 +259,7 @@ void cord::applyTransform2()
 {
     glm::mat4 model(1.0f);
     model = glm::translate(model, glm::vec3(1.5f, 2.0f, 2.0f));
-    model = glm::rotate(model, (float)glfwGetTime() * glm::radians(70.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(70.0f), glm::vec3(0.5f, 1.0f, 0.0f));
     // model = glm::rotate(model, glm::radians(-75.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     glm::mat4 view(1.0f);
     view = glm::translate(view, glm::vec3(0.0f, 0.0f, -11.0f));
