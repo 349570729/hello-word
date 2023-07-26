@@ -5,7 +5,6 @@
 #include "glfw3.h"
 #include "glm/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
-#include "glm/gtc/type_ptr.hpp"
 
 cord::~cord()
 {
@@ -245,10 +244,10 @@ void cord::setTex()
 void cord::applyTransform1()
 {
     glm::mat4 model(1.0f);
-    model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+    // model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
     // model = glm::rotate(model, glm::radians(-75.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    glm::mat4 view(1.0f);
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -11.0f));
+    // glm::mat4 view(1.0f);
+    glm::mat4 view = createCamera();
     glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
     glm::mat4 trans = projection * view * model;
     GLint loc = glGetUniformLocation(program, "trans");
@@ -259,12 +258,20 @@ void cord::applyTransform2()
 {
     glm::mat4 model(1.0f);
     model = glm::translate(model, glm::vec3(1.5f, 2.0f, 2.0f));
-    model = glm::rotate(model, glm::radians(70.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-    // model = glm::rotate(model, glm::radians(-75.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    glm::mat4 view(1.0f);
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -11.0f));
+    model = glm::rotate(model, (float)glfwGetTime() * glm::radians(70.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+    glm::mat4 view = createCamera();
     glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
     glm::mat4 trans = projection * view * model;
     GLint loc = glGetUniformLocation(program, "trans");
     glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(trans));
+}
+
+glm::mat4 cord::createCamera()
+{
+    glm::mat4 view(1.0f);
+    float radius(10.0f);
+    float camX = radius * std::sin(glfwGetTime());
+    float camZ = radius * std::cos(glfwGetTime());
+    view = glm::lookAt(glm::vec3(camX, 4.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    return view;
 }

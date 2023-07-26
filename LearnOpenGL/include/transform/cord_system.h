@@ -3,6 +3,7 @@
 
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
+#include "glm/gtc/type_ptr.hpp"
 // ʹ��glDrawArrays�����������˴�������������
 class GLFWwindow;
 
@@ -20,6 +21,7 @@ private:
     void setTex();
     void applyTransform1();
     void applyTransform2();
+    glm::mat4 createCamera();
 
 private:
     GLuint VBO;
