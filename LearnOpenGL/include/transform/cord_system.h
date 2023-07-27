@@ -4,6 +4,7 @@
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
 #include "glm/gtc/type_ptr.hpp"
+#include "glm/glm.hpp"
 // ʹ��glDrawArrays�����������˴�������������
 class GLFWwindow;
 
@@ -22,6 +23,8 @@ private:
     void applyTransform1();
     void applyTransform2();
     glm::mat4 createCamera();
+    glm::mat4 moveCameraWithTime();
+    glm::mat4 moveCameraWithKeyboard();
 
 private:
     GLuint VBO;
@@ -29,6 +32,8 @@ private:
     GLuint box_texture;
     GLuint smile_texture;
     GLuint program;
+    GLFWwindow *window_;
+    glm::vec3 eye_{0.0f, 4.0f, 10.0f};
 };
 
 #endif // CORD_SYSTEM_H

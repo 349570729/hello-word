@@ -3,7 +3,6 @@
 #include <proc.h>
 #include "stb_image.h"
 #include "glfw3.h"
-#include "glm/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 
 cord::~cord()
@@ -95,6 +94,7 @@ void cord::beforeLoop()
 
 void cord::drawTria(GLFWwindow *window)
 {
+    window_ = window;
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, box_texture);
     glActiveTexture(GL_TEXTURE1);
@@ -268,10 +268,38 @@ void cord::applyTransform2()
 
 glm::mat4 cord::createCamera()
 {
+    return moveCameraWithKeyboard();
+}
+
+glm::mat4 cord::moveCameraWithTime()
+{
     glm::mat4 view(1.0f);
     float radius(10.0f);
     float camX = radius * std::sin(glfwGetTime());
     float camZ = radius * std::cos(glfwGetTime());
     view = glm::lookAt(glm::vec3(camX, 4.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    return view;
+}
+
+glm::mat4 cord::moveCameraWithKeyboard()
+{
+    const static glm::vec3 up{0.0f, 1.0f, 0.0f};
+    const static glm::vec3 move_front{0.0f, 0.0f, -1.0f};
+    const static glm::vec3 move_back{0.0f, 0.0f, 1.0f};
+    const static glm::vec3 move_left = glm::normalize(glm::cross(up, move_front));
+    const static glm::vec3 move_right = glm::normalize(glm::cross(move_front, up));
+    const static float speed = 0.01f;
+    if (GLFW_PRESS == glfwGetKey(window_, GLFW_KEY_W)) {
+        eye_ += speed * move_front;
+    } else if (GLFW_PRESS == glfwGetKey(window_, GLFW_KEY_S)) {
+        eye_ += speed * move_back;
+    } else if (GLFW_PRESS == glfwGetKey(window_, GLFW_KEY_A)) {
+        eye_ += speed * move_left;
+    } else if (GLFW_PRESS == glfwGetKey(window_, GLFW_KEY_D)) {
+        eye_ += speed * move_right;
+    } else if (GLFW_PRESS == glfwGetKey(window_, GLFW_KEY_H)) {
+        eye_ = glm::vec3{0.0f, 4.0f, 10.0f};
+    }
+    glm::mat4 view = glm::lookAt(eye_, glm::vec3(0.0f, 0.0f, 0.0f), up);
     return view;
 }
