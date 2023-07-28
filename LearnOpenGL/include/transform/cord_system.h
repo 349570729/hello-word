@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include "glm/gtc/type_ptr.hpp"
 #include "glm/glm.hpp"
+#include <chrono>
 // ʹ��glDrawArrays�����������˴�������������
 class GLFWwindow;
 
@@ -34,6 +35,7 @@ private:
     GLuint program;
     GLFWwindow *window_;
     glm::vec3 eye_{0.0f, 4.0f, 10.0f};
+    std::chrono::high_resolution_clock::time_point last_time_;
 };
 
 #endif // CORD_SYSTEM_H

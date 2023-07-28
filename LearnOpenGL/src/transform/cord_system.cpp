@@ -90,6 +90,7 @@ void cord::beforeLoop()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
     // ���ö�������
     glEnableVertexAttribArray(1);
+    last_time_ = std::chrono::high_resolution_clock::now();
 }
 
 void cord::drawTria(GLFWwindow *window)
@@ -133,7 +134,6 @@ void cord::createProgram()
 
 GLuint cord::createVertexShader()
 {
-
     // ����������ɫ��
     unsigned int vertex_shader = glCreateShader(GL_VERTEX_SHADER);
     // ������ɫ����Դ��,location��Ϊ�˱�����CPU��׼����������
@@ -288,16 +288,20 @@ glm::mat4 cord::moveCameraWithKeyboard()
     const static glm::vec3 move_back{0.0f, 0.0f, 1.0f};
     const static glm::vec3 move_left = glm::normalize(glm::cross(up, move_front));
     const static glm::vec3 move_right = glm::normalize(glm::cross(move_front, up));
-    const static float speed = 0.01f;
+    const static float speed_per_ms = 0.01f;
+    auto time = std::chrono::high_resolution_clock::now();
+    auto duration_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time - last_time_);
+    last_time_ = time;
     if (GLFW_PRESS == glfwGetKey(window_, GLFW_KEY_W)) {
-        eye_ += speed * move_front;
+        eye_ += speed_per_ms * duration_ms.count() * move_front;
     } else if (GLFW_PRESS == glfwGetKey(window_, GLFW_KEY_S)) {
-        eye_ += speed * move_back;
+        eye_ += speed_per_ms * duration_ms.count() * move_back;
     } else if (GLFW_PRESS == glfwGetKey(window_, GLFW_KEY_A)) {
-        eye_ += speed * move_left;
+        eye_ += speed_per_ms * duration_ms.count() * move_left;
     } else if (GLFW_PRESS == glfwGetKey(window_, GLFW_KEY_D)) {
-        eye_ += speed * move_right;
+        eye_ += speed_per_ms * duration_ms.count() * move_right;
     } else if (GLFW_PRESS == glfwGetKey(window_, GLFW_KEY_H)) {
+        // reset camera
         eye_ = glm::vec3{0.0f, 4.0f, 10.0f};
     }
     glm::mat4 view = glm::lookAt(eye_, glm::vec3(0.0f, 0.0f, 0.0f), up);
