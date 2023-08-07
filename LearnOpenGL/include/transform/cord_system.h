@@ -35,7 +35,12 @@ private:
     GLuint program;
     GLFWwindow *window_;
     glm::vec3 eye_{0.0f, 4.0f, 10.0f};
+    glm::vec3 center_{0.0f, 0.0f, 0.0f};
     std::chrono::high_resolution_clock::time_point last_time_;
+    double last_xpos_;
+    double last_ypos_;
+    bool first_draw_{false};
+    bool first_clicked_{false};
 };
 
 #endif // CORD_SYSTEM_H

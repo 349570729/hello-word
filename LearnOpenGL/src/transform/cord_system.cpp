@@ -90,7 +90,6 @@ void cord::beforeLoop()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
     // ���ö�������
     glEnableVertexAttribArray(1);
-    last_time_ = std::chrono::high_resolution_clock::now();
 }
 
 void cord::drawTria(GLFWwindow *window)
@@ -283,12 +282,39 @@ glm::mat4 cord::moveCameraWithTime()
 
 glm::mat4 cord::moveCameraWithKeyboard()
 {
+    double xpos, ypos;
     const static glm::vec3 up{0.0f, 1.0f, 0.0f};
     const static glm::vec3 move_front{0.0f, 0.0f, -1.0f};
     const static glm::vec3 move_back{0.0f, 0.0f, 1.0f};
     const static glm::vec3 move_left = glm::normalize(glm::cross(up, move_front));
     const static glm::vec3 move_right = glm::normalize(glm::cross(move_front, up));
     const static float speed_per_ms = 0.01f;
+    const static float speed_per_pixel = 0.01f;
+    if (first_draw_)
+    {
+        last_time_ = std::chrono::high_resolution_clock::now();
+        glm::mat4 view = glm::lookAt(eye_, glm::vec3(0.0f, 0.0f, 0.0f), up);
+        first_draw_ = false;
+        return view;
+    }
+    if (GLFW_PRESS ==  glfwGetMouseButton(window_, GLFW_MOUSE_BUTTON_LEFT))
+    {
+        if (first_clicked_)
+        {
+            glfwGetCursorPos(window_, &last_xpos_, &last_ypos_);
+            first_clicked_ = false;
+        } else {
+            double xpos, ypos;
+            glfwGetCursorPos(window_, &xpos, &ypos);
+            center_ +=  (float)(xpos - last_xpos_) * speed_per_pixel * move_left;
+            center_ +=  (float)(ypos - last_ypos_) * speed_per_pixel * up;
+            last_xpos_ = xpos;
+            last_ypos_ = ypos;
+        }
+    } else if (GLFW_RELEASE ==  glfwGetMouseButton(window_, GLFW_MOUSE_BUTTON_LEFT)) {
+        first_clicked_ = true;
+    }
+
     auto time = std::chrono::high_resolution_clock::now();
     auto duration_ms = std::chrono::duration_cast<std::chrono::milliseconds>(time - last_time_);
     last_time_ = time;
@@ -303,7 +329,8 @@ glm::mat4 cord::moveCameraWithKeyboard()
     } else if (GLFW_PRESS == glfwGetKey(window_, GLFW_KEY_H)) {
         // reset camera
         eye_ = glm::vec3{0.0f, 4.0f, 10.0f};
+        center_ = glm::vec3{0.0f, 0.0f, 0.0f};
     }
-    glm::mat4 view = glm::lookAt(eye_, glm::vec3(0.0f, 0.0f, 0.0f), up);
+    glm::mat4 view = glm::lookAt(eye_, center_, up);
     return view;
 }
