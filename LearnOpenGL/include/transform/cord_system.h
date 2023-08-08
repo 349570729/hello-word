@@ -15,14 +15,17 @@ public:
     ~cord();
     void beforeLoop();
     void drawTria(GLFWwindow *window);
+    void setFov(float fov);
 
 private:
     void createProgram();
     GLuint createVertexShader();
     GLuint createFragmentShader();
     void setTex();
-    void applyTransform1();
-    void applyTransform2();
+    void applyModel1();
+    void applyModel2();
+    void applyProject();
+    void applyView();
     glm::mat4 createCamera();
     glm::mat4 moveCameraWithTime();
     glm::mat4 moveCameraWithKeyboard();
@@ -41,6 +44,7 @@ private:
     double last_ypos_;
     bool first_draw_{false};
     bool first_clicked_{false};
+    float fov_{45.0f};
 };
 
 #endif // CORD_SYSTEM_H

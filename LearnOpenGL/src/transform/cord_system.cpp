@@ -101,10 +101,17 @@ void cord::drawTria(GLFWwindow *window)
     glBindTexture(GL_TEXTURE_2D, smile_texture);
     glUseProgram(program);
     glBindVertexArray(VAO);
-    applyTransform1();
+    applyView();
+    applyProject();
+    applyModel1();
     glDrawArrays(GL_TRIANGLES, 0, 36);
-    applyTransform2();
+    applyModel2();
     glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+
+void cord::setFov(float fov)
+{
+    fov_ = fov;
 }
 
 void cord::createProgram()
@@ -141,10 +148,12 @@ GLuint cord::createVertexShader()
                              "layout (location=0) in vec3 myPos; \n"
                              "layout (location=1) in vec2 inTexCoord; \n"
                              "out vec2 texCoord;\n"
-                             "uniform mat4 trans;\n"
+                             "uniform mat4 model;\n"
+                             "uniform mat4 project;\n"
+                             "uniform mat4 view;\n"
                              "void main() \n"
                              "{ \n"
-                             "	gl_Position = trans * vec4(myPos.x, myPos.y, myPos.z, 1.0f); \n"
+                             "	gl_Position = project * view * model * vec4(myPos.x, myPos.y, myPos.z, 1.0f); \n"
                              "	texCoord = inTexCoord;\n"
                              "} \0";
     // ��ɫ������Դ��
@@ -240,29 +249,34 @@ void cord::setTex()
     glUniform1i(glGetUniformLocation(program, "smile_texture"), 1);
 }
 
-void cord::applyTransform1()
+void cord::applyModel1()
 {
     glm::mat4 model(1.0f);
-    // model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-    // model = glm::rotate(model, glm::radians(-75.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    // glm::mat4 view(1.0f);
-    glm::mat4 view = createCamera();
-    glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-    glm::mat4 trans = projection * view * model;
-    GLint loc = glGetUniformLocation(program, "trans");
-    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(trans));
+    GLint loc = glGetUniformLocation(program, "model");
+    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(model));
 }
 
-void cord::applyTransform2()
+void cord::applyModel2()
 {
     glm::mat4 model(1.0f);
     model = glm::translate(model, glm::vec3(1.5f, 2.0f, 2.0f));
     model = glm::rotate(model, (float)glfwGetTime() * glm::radians(70.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+    GLint loc = glGetUniformLocation(program, "model");
+    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(model));
+}
+
+void cord::applyProject()
+{
+    glm::mat4 projection = glm::perspective(fov_, 4.0f / 3.0f, 0.1f, 100.0f);
+    GLint loc = glGetUniformLocation(program, "project");
+    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(projection));
+}
+
+void cord::applyView()
+{
+    GLint loc = glGetUniformLocation(program, "view");
     glm::mat4 view = createCamera();
-    glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-    glm::mat4 trans = projection * view * model;
-    GLint loc = glGetUniformLocation(program, "trans");
-    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(trans));
+    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(view));
 }
 
 glm::mat4 cord::createCamera()
@@ -330,6 +344,7 @@ glm::mat4 cord::moveCameraWithKeyboard()
         // reset camera
         eye_ = glm::vec3{0.0f, 4.0f, 10.0f};
         center_ = glm::vec3{0.0f, 0.0f, 0.0f};
+        fov_ = 45.0f;
     }
     glm::mat4 view = glm::lookAt(eye_, center_, up);
     return view;

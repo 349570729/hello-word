@@ -14,10 +14,19 @@
 #include "glm_demo.h"
 #include "gltransform.h"
 #include "cord_system.h"
+#include <algorithm>
 
 void sizeAdj(GLFWwindow *window, int width, int height)
 {
 	glViewport(0, 0, width, height);
+}
+
+float fov = 45.0f;
+void scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	fov -= yoffset * 0.05;
+	fov = std::max(fov, 0.5f);
+	fov = std::min(fov, 60.0f);
 }
 
 GLFWwindow *initGLFW(bool multi_thread)
@@ -43,6 +52,7 @@ GLFWwindow *initGLFW(bool multi_thread)
 	{
 		glfwMakeContextCurrent(window);
 		glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_FALSE);
+		glfwSetScrollCallback(window, scrollCallback);
 	}
 	return window;
 }
@@ -77,6 +87,7 @@ void doRender(bool multi_thread)
 		glfwPollEvents();
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		obj->setFov(fov);
 		obj->drawTria(window);
 	}
 	delete obj;
