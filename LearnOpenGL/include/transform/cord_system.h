@@ -6,19 +6,21 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "glm/glm.hpp"
 #include <chrono>
+#include "Shader.h"
 // ʹ��glDrawArrays�����������˴�������������
 class GLFWwindow;
 
 class cord
 {
 public:
+    cord();
     ~cord();
     void beforeLoop();
     void drawTria(GLFWwindow *window);
     void setFov(float fov);
 
 private:
-    void createProgram();
+    // void createProgram();
     GLuint createVertexShader();
     GLuint createFragmentShader();
     void setTex();
@@ -35,7 +37,7 @@ private:
     GLuint VAO;
     GLuint box_texture;
     GLuint smile_texture;
-    GLuint program;
+    // GLuint program;
     GLFWwindow *window_;
     glm::vec3 eye_{0.0f, 4.0f, 10.0f};
     glm::vec3 center_{0.0f, 0.0f, 0.0f};
@@ -45,6 +47,7 @@ private:
     bool first_draw_{false};
     bool first_clicked_{false};
     float fov_{45.0f};
+	Shader shader_;
 };
 
 #endif // CORD_SYSTEM_H
