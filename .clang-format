@@ -62,3 +62,4 @@ IndentPPDirectives: AfterHash
 # macros for which the opening brace stays attached.
 ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH, forever, Q_FOREVER, QBENCHMARK, QBENCHMARK_ONCE ]
 
+SortIncludes: Never

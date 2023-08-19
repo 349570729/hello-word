@@ -3,12 +3,13 @@
 
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
-#include "glm/gtc/type_ptr.hpp"
-#include "glm/glm.hpp"
-#include <chrono>
+
 #include "Shader.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 // ʹ��glDrawArrays�����������˴�������������
 class GLFWwindow;
+class Camera;
 
 class cord
 {
@@ -17,7 +18,8 @@ public:
     ~cord();
     void beforeLoop();
     void drawTria(GLFWwindow *window);
-    void setFov(float fov);
+    Shader *shader();
+    void setCamera(Camera *camera);
 
 private:
     // void createProgram();
@@ -30,7 +32,6 @@ private:
     void applyView();
     glm::mat4 createCamera();
     glm::mat4 moveCameraWithTime();
-    glm::mat4 moveCameraWithKeyboard();
 
 private:
     GLuint VBO;
@@ -39,15 +40,8 @@ private:
     GLuint smile_texture;
     // GLuint program;
     GLFWwindow *window_;
-    glm::vec3 eye_{0.0f, 4.0f, 10.0f};
-    glm::vec3 center_{0.0f, 0.0f, 0.0f};
-    std::chrono::high_resolution_clock::time_point last_time_;
-    double last_xpos_;
-    double last_ypos_;
-    bool first_draw_{false};
-    bool first_clicked_{false};
-    float fov_{45.0f};
-	Shader shader_;
+    Shader shader_;
+    Camera *camera_;
 };
 
-#endif // CORD_SYSTEM_H
+#endif  // CORD_SYSTEM_H

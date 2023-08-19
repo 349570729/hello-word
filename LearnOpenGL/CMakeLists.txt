@@ -31,6 +31,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 ./include/tex
 ./include/triangle
 ./include/transform
+./include/camera
 os
 ./thirdparty/glm
 )
