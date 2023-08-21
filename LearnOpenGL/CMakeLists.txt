@@ -32,7 +32,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 ./include/triangle
 ./include/transform
 ./include/camera
+./include/light
 os
+utils
 ./thirdparty/glm
 )
 

@@ -22,9 +22,6 @@ public:
     void setCamera(Camera *camera);
 
 private:
-    // void createProgram();
-    GLuint createVertexShader();
-    GLuint createFragmentShader();
     void setTex();
     void applyModel1();
     void applyModel2();
