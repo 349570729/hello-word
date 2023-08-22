@@ -11,6 +11,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${DEST_DIR})
 
 file(GLOB_RECURSE SRC src/*)
 file(GLOB_RECURSE OS_SRC os/*)
+file(GLOB_RECURSE UTIL_SRC utils/*)
 file(GLOB_RECURSE TEST_SRC test/*)
 file(GLOB RESOURCE_FILES res/*)
 message(DEBUG "RESOURCE_FILES: ${RESOURCE_FILES}")
@@ -19,7 +20,8 @@ file(COPY ${RESOURCE_FILES} DESTINATION ${DEST_DIR})
 add_executable(${PROJECT_NAME} 
     ${SRC}
     ${OS_SRC}
-    ${TEST_SRC})
+    ${TEST_SRC}
+    ${UTIL_SRC})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 ./include/

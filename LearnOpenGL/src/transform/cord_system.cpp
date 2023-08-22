@@ -7,6 +7,7 @@
 
 #include "stb_image.h"
 #include "camera.h"
+#include "utils.h"
 
 cord::cord()
     : shader_(os::curProcDir() + "/cord.vs", os::curProcDir() + "/cord.fs")
@@ -24,7 +25,7 @@ void cord::beforeLoop()
 {
     setTex();
 
-    float *vertices = cubicVertexWithTex();
+    const float *vertices = cubicVertexWithTex();
     glEnable(GL_DEPTH_TEST);
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);

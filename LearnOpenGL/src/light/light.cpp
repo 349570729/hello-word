@@ -1,13 +1,15 @@
 #include "light.h"
 #include "utils.h"
+#include "Shader.h"
+#include "proc.h"
 
-light::light()
+Light::Light()
     : shader_(os::curProcDir() + "/light.vs", os::curProcDir() + "/light.fs")
 {}
 
-void light::beforeLoop()
+void Light::prepare()
 {
-    float *cubic_vertex = cubicVertexWithTex();
+    const float *cubic_vertex = cubicVertexWithTex();
     glEnable(GL_DEPTH_TEST);
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -33,18 +35,15 @@ void light::beforeLoop()
     glEnableVertexAttribArray(0);
 }
 
-void light::drawTria(GLFWwindow *window)
+void Light::drawTria(GLFWwindow *window)
 {
     shader_.use();
     glBindVertexArray(VAO);
-    applyProject();
-    applyModel1();
     glDrawArrays(GL_TRIANGLES, 0, 36);
-    applyModel2();
     glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 
-Shader *light::shader()
+Shader *Light::shader()
 {
     return &shader_;
 }

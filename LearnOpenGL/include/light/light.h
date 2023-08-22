@@ -3,12 +3,13 @@
 
 #include "Shader.h"
 #include <glad.h>
+#include "glfw3.h"
 
-class light
+class Light
 {
 public:
-    light();
-    void beforeLoop();
+    Light();
+    void prepare();
     void drawTria(GLFWwindow *window);
     Shader *shader();
 
