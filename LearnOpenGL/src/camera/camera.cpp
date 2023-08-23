@@ -56,6 +56,7 @@ void Camera::keyAction(GLFWwindow *window, int key, int scancode, int action, in
 // in the painting loop
 void Camera::applyView()
 {
+    // shader_->use();
     if (first_draw_) {
         last_time_ = std::chrono::high_resolution_clock::now();
         first_draw_ = false;
@@ -90,7 +91,7 @@ void Camera::onPressKey(int key)
         eye_ += speed_per_ms * duration_ms_.count() * move_right;
     } else if (GLFW_KEY_H == key) {
         // reset camera
-        eye_ = glm::vec3{0.0f, 4.0f, 10.0f};
+        eye_ = glm::vec3{0.0f, 4.0f, 4.0f};
         center_ = glm::vec3{0.0f, 0.0f, 0.0f};
         fov_ = 45.0f;
     }

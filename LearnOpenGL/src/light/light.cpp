@@ -15,6 +15,13 @@ Light::Light()
 void Light::prepare()
 {
     const float *cubic_vertex = cubicVertexWithTex();
+    // clang-format off
+    // const float cubic_vertex[] = {
+    //     0.5f, 0.0f, 0.0f,
+    //     0.5f, 0.5f, 0.0f,
+    //     0.0f, 0.5f, 0.0f,
+    // };
+    // clang-format on   
     glEnable(GL_DEPTH_TEST);
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -39,14 +46,17 @@ void Light::prepare()
     // ���ö�������
     glEnableVertexAttribArray(0);
 
+    cubic_shader_.use();
     // set color
-    glm::vec3 object_color = {0.2f, 0.3f, 0.5f};
+    glm::vec3 object_color = {1.0f, 0.5f, 0.31f};
     cubic_shader_.setVec3fv("object_color", 1, glm::value_ptr(object_color));
     glm::vec3 light_color = {1.0f, 1.0f, 1.0f};
     cubic_shader_.setVec3fv("light_color", 1, glm::value_ptr(light_color));
     glm::mat4 model{1.0f};
-    model = glm::scale(model, glm::vec3(0.5f));
+    model = glm::scale(model, glm::vec3(2.0f));
     cubic_shader_.setMat4fv("model", 1, GL_FALSE, glm::value_ptr(model));
+    glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+    cubic_shader_.setMat4fv("project", 1, GL_FALSE, glm::value_ptr(projection));
     // model = glm::translate(model, glm::vec3(1.2f, 1.0f, 2.0f));
     // // scale
     // model = glm::scale(model, glm::vec3(0.3f));
@@ -55,8 +65,8 @@ void Light::prepare()
 
 void Light::drawTria(GLFWwindow *window)
 {
-    glBindVertexArray(VAO);
     cubic_shader_.use();
+    glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     // src_shader_.use();
     // glDrawArrays(GL_TRIANGLES, 0, 36);

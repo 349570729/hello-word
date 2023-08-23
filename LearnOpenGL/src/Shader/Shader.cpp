@@ -26,8 +26,8 @@ Shader::Shader(const std::string& vertex_file, const std::string& fragment_file)
     }
 
     // ���ź�Ϳ����ͷ�shader��
-    glDeleteShader(vertex_shader);
-    glDeleteShader(fragment_shader);
+    // glDeleteShader(vertex_shader);
+    // glDeleteShader(fragment_shader);
 }
 
 Shader::~Shader()
