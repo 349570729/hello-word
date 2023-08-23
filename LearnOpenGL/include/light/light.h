@@ -17,7 +17,8 @@ private:
 private:
     GLuint VBO;
     GLuint VAO;
-    Shader shader_;
+    Shader cubic_shader_;
+    Shader src_shader_;
 };
 
 #endif  // LIGHT_H

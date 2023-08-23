@@ -66,7 +66,7 @@ void doRender()
     }
     // ���ô����ӽ�
     glViewport(0, 0, 800, 600);
-    std::cout << "init success��" << std::endl;
+    std::cout << "init light main success" << std::endl;
     // ע�ᴰ�ڳߴ�ı�ʱ�Ļص���������ʱӦ����Ӧ�����ӽ�
     glfwSetFramebufferSizeCallback(window, sizeAdj);
     std::unique_ptr<Light> obj = std::make_unique<Light>();
