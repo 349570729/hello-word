@@ -10,5 +10,5 @@ int main(int argc, char *argv[]);
 
 int main(int argc, char *argv[])
 {
-    return light::main(argc, argv);
+    return basic::main(argc, argv);
 }
