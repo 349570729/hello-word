@@ -31,13 +31,16 @@ void keyAction(GLFWwindow *window, int key, int scancode, int action, int mods)
     camera->keyAction(window, key, scancode, action, mods);
 }
 
-GLFWwindow *initGLFW()
+GLFWwindow *initGLFW(bool need_window = true)
 {
     // �������ں�������
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    if (!need_window) {
+        return nullptr;
+    }
     GLFWwindow *window = glfwCreateWindow(800, 600, "hello glfw", nullptr, nullptr);
     if (nullptr == window) {
         const char *error_msg = new char[100];
@@ -57,8 +60,7 @@ GLFWwindow *initGLFW()
 
 void doRender()
 {
-    GLFWwindow *window = initGLFW();
-
+    GLFWwindow *window = initGLFW(false);
     // ����opengl�ĺ���ǰ�����ʼ��glad�����ڻ�ȡopengl������ַ
     if (!gladLoadGLLoader(GLADloadproc(glfwGetProcAddress))) {
         std::cout << "fail to initialize glad" << std::endl;
@@ -68,15 +70,15 @@ void doRender()
     glViewport(0, 0, 800, 600);
     std::cout << "init light main success" << std::endl;
     // ע�ᴰ�ڳߴ�ı�ʱ�Ļص���������ʱӦ����Ӧ�����ӽ�
-    glfwSetFramebufferSizeCallback(window, sizeAdj);
+    // glfwSetFramebufferSizeCallback(window, sizeAdj);
     std::unique_ptr<Light> obj = std::make_unique<Light>();
     camera = std::make_unique<Camera>(obj->shader());
     obj->prepare();
-    while (!glfwWindowShouldClose(window)) {
-        if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_ESCAPE)) {
-            glfwSetWindowShouldClose(window, true);
-        }
-        glfwSwapBuffers(window);
+    while (true) {
+        // if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_ESCAPE)) {
+        //     glfwSetWindowShouldClose(window, true);
+        // }
+        // glfwSwapBuffers(window);
         glfwPollEvents();
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
