@@ -7,7 +7,7 @@
 #include <iostream>
 #include <memory>
 #include <thread>
-
+#include <unistd.h>
 #include "IShader.h"
 #include "Shader.h"
 #include "Triangle.h"
@@ -69,6 +69,7 @@ GLFWwindow *initGLFW(bool multi_thread)
 
 void doRender(bool multi_thread)
 {
+    printf("tid: %d\n", gettid());
     GLFWwindow *window = initGLFW(multi_thread);
 
     // ����opengl�ĺ���ǰ�����ʼ��glad�����ڻ�ȡopengl������ַ
@@ -132,8 +133,8 @@ int main(int argc, char *argv[])
     // printf("Press any key to continue...");
     // getchar();
     // test::os();
-    // multiThreadRender();
-    render();
+    multiThreadRender();
+    // render();
     // glm_main();
     return 0;
 }
