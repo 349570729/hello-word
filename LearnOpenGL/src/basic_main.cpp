@@ -133,8 +133,8 @@ int main(int argc, char *argv[])
     // printf("Press any key to continue...");
     // getchar();
     // test::os();
-    multiThreadRender();
-    // render();
+//    multiThreadRender();
+   render();
     // glm_main();
     return 0;
 }

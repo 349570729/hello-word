@@ -32,7 +32,7 @@ Shader::Shader(const std::string& vertex_file, const std::string& fragment_file)
 
 Shader::~Shader()
 {
-    glDeleteProgram(program);
+    // glDeleteProgram(program);
 }
 
 void Shader::use()

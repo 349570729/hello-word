@@ -15,10 +15,10 @@ cord::cord()
 
 cord::~cord()
 {
-    glDeleteBuffers(1, &VBO);
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteTextures(1, &box_texture);
-    glDeleteTextures(1, &smile_texture);
+    // glDeleteBuffers(1, &VBO);
+    // glDeleteVertexArrays(1, &VAO);
+    // glDeleteTextures(1, &box_texture);
+    // glDeleteTextures(1, &smile_texture);
 }
 
 void cord::beforeLoop()
